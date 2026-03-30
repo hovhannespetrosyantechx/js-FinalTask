@@ -1,4 +1,32 @@
+import { fetchPopularMovies } from './api.js';
+import { renderMovies } from './render.js';
 
+const loadMoreBtn = document.querySelector('.load-more');
+
+let currentPage = 1;
+let totalPages = 1;
+
+document.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+  const data = await fetchPopularMovies(currentPage);
+
+  renderMovies(data.movies);
+
+  totalPages = data.totalPages;
+}
+
+
+
+loadMoreBtn.addEventListener('click', async () => {
+  if (currentPage >= totalPages) return;
+
+  currentPage++;
+
+  const data = await fetchPopularMovies(currentPage);
+
+  renderMovies(data.movies, true);
+});
 
 // function makeUrl(baseUrl, params){
 //     const url = new URL(baseUrl);
@@ -14,5 +42,5 @@
 //     }
 // }
 
-// const mycostomurl = makeUrl('http exaple com', {name: 'ashout', age:'30', city:null});
-// fetch(mycostomurl)
+// const mycostomurl = makeUrl('http exaple com', {name: 'ashout', age:'30', city:null });
+// fetch(mycostomurl)   
