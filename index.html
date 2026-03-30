@@ -3,29 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TMDB Clone</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Popular Movies — TMDB Clone</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet" />
   </head>
   <body>
     <div class="page">
-      <header class="header"></header>
-
-      <main class="content">
-        
-        <aside class="content__sidebar">
-          <div class="sorting"></div>
-          <div class="filter-panel">
-            <h3>Filters</h3>
+      <header class="header">
+        <div class="header__inner container">
+          <a class="header__logo" href="#">
+            <img
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+              alt="TMDB Logo" />
+          </a>
+          <nav class="header__nav">
+            <a class="header__nav-link" href="#">Movies</a>
+            <a class="header__nav-link" href="#">TV Shows</a>
+            <a class="header__nav-link" href="#">People</a>
+            <a class="header__nav-link" href="#">Awards</a>
+            <a class="header__nav-link" href="#">More</a>
+          </nav>
+          <div class="header__actions">
+            <a href="#" class="header__nav-link"
+              ><i class="fa-solid fa-plus"></i
+            ></a>
+            <span class="header__nav-link white-border">EN</span>
+            <a href="#" class="header__nav-link">Login</a>
+            <a href="#" class="header__nav-link">Join TMDB</a>
+            <a href="#" class="header__nav-link">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
           </div>
-        </aside>
+        </div>
+      </header>
 
-        <section class="content__main">
-          <div class="movie-grid"></div>
-          <button class="load-more">Load More</button>
-        </section>
-
+      <main class="main">
+        
       </main>
+      <footer class="footer">
+        <div class="footer__inner container">
+          <div class="footer__inner-item">
+            <img
+              class="footer__logo"
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
+              alt="TMDB Logo" />
+            <button class="footer__join-button">Join the Community</button>
+          </div>
+          <div class="footer__inner-item">
+            <h4>THE BASICS</h4>
+            <a href="#" class="header__nav-link">About TMdb</a>
+            <a href="#" class="header__nav-link">contact Us</a>
+            <a href="#" class="header__nav-link">API Documentation</a>
+            <a href="#" class="header__nav-link">API for Buisness</a>
+            <a href="#" class="header__nav-link">System Status</a>
+          </div>
+          <div class="footer__inner-item">
+            <h4>GET INLVOLVED</h4>
+            <a href="#" class="header__nav-link">Contribution Bible</a>
+            <a href="#" class="header__nav-link">Add New Movie</a>
+            <a href="#" class="header__nav-link">Add New TV Show</a>
+          </div>
+          <div class="footer__inner-item">
+            <h4>COMMUNITY</h4>
+            <a href="#" class="header__nav-link">Guidelines</a>
+            <a href="#" class="header__nav-link">Discussions</a>
+            <a href="#" class="header__nav-link">Leaderboard</a>
+            <a href="#" class="header__nav-link">Support Forums</a>
+          </div>
+          <div class="footer__inner-item">
+            <h4>LEGAL</h4>
+            <a href="#" class="header__nav-link">Terms of Use</a>
+            <a href="#" class="header__nav-link">API Terms of Use</a>
+            <a href="#" class="header__nav-link">Provacy Policy</a>
+            <a href="#" class="header__nav-link">DMCA Policy</a>
+          </div>
+        </div>
+      </footer>
     </div>
-    <script src="js/main.js"></script>
+    <script src="main.js"></script>
   </body>
 </html>

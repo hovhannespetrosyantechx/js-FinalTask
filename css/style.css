@@ -1,0 +1,130 @@
+:root {
+  --color-main-bg: #f8f9fa;
+  --color-secondary-bg: #032541;
+  --color-header-text: #ffffff;
+  --color-primary: #01b4e4;
+  --color-primary-dark: #0199c8;
+  --color-text-main: #000000;
+  --font-family: "Source Sans 3", sans-serif;
+  --font-size-base: 14px;
+  --font-size-xl: 22px;
+  --header-height: 64px;
+  --spacing-lg: 24px;
+  --spacing-md: 16px;
+  --spacing-sm: 8px;
+  --spacing-xl: 32px;
+  --spacing-xs: 4px;
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: var(--font-size-base);
+}
+body {
+  background: var(--color-main-bg);
+  color: var(--color-text-main);
+  font-family: var(--font-family);
+  min-height: 100vh;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+  font-family: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 var(--spacing-lg);
+}
+
+
+.header {
+  background: var(--color-secondary-bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  height: var(--header-height);
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.header__inner {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-lg);
+  height: 100%;
+}
+.header__logo img {
+  height: 24px;
+  width: auto;
+}
+.header__nav {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  gap: var(--spacing-lg);
+}
+.header__nav-link {
+  border-radius: 4px;
+  color: var(--color-header-text);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  transition: color 0.2s;
+}
+.header__nav-link:hover {
+  color: var(--color-primary);
+}
+.header__actions {
+  align-items: center;
+  display: flex;
+  gap: var(--spacing-md);
+}
+.white-border {
+  border: 1px solid white;
+}
+
+
+.page-title {
+  padding: var(--spacing-lg) 0 var(--spacing-md);
+}
+.page-title__text {
+  color: var(--color-text-main);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.footer {
+  background: var(--color-secondary-bg);
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg) 0;
+}
+.footer__inner {
+  align-items: flex-start;
+  justify-content: center;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xl);
+}
+.footer__logo {
+  height: 94px;
+}
+
+.footer__inner-item{
+  display: flex;
+  flex-direction: column;
+  align-items:start;
+}
