@@ -1,0 +1,54 @@
+:root {
+  --color-bg-page: #f8f9fa;
+  --color-bg-header: #032541;
+  --color-bg-footer: #032541;
+  --color-bg-card: #ffffff;
+  --color-bg-sidebar: #ffffff;
+  --color-bg-badge: #081c22;
+
+  --color-primary: #01b4e4;
+  --color-primary-dark: #0199c8;
+
+  --color-text-primary: #000000;
+  --color-text-light: #ffffff;
+  --color-text-muted: #999999;
+
+  --color-border-panel: #d7d7d7;
+  --color-rating-good: #21d07a;
+  --color-rating-mid: #d2d531;
+  --color-rating-bad: #db2360;
+  --color-rating-bg: #081c22;
+
+  --font-family-base: "Source Sans 3", sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+
+  --container-max-width: 1400px;
+  --container-padding: var(--spacing-lg);
+  --header-height: 64px;
+  --sidebar-width: 260px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 50%;
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-header: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
