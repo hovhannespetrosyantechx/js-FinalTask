@@ -2,6 +2,9 @@ import { fetchPopularMovies } from './api.js';
 import { renderMovies } from './render.js';
 
 const loadMoreBtn = document.querySelector('.load-more');
+const filterPanelHeader = document.getElementById("filter-panel-header");
+const sortPanelHeader  = document.getElementById("sort-panel-header");
+
 
 let currentPage = 1;
 let totalPages = 1;
@@ -27,6 +30,31 @@ loadMoreBtn.addEventListener('click', async () => {
 
   renderMovies(data.movies, true);
 });
+
+
+function togglePanel(header, body) {
+  const isOpen = header.classList.contains("filter-panel__header--open");
+ 
+  if (isOpen) {
+    header.classList.remove("filter-panel__header--open");
+    body.style.display = "none";
+  } else {
+    header.classList.add("filter-panel__header--open");
+    body.style.display = "";
+  }
+}
+
+sortPanelHeader.addEventListener("click", () => {
+  const body = document.getElementById("sort-panel-body");
+  togglePanel(sortPanelHeader, body);
+});
+ 
+filterPanelHeader.addEventListener("click", () => {
+  const body = document.getElementById("filter-panel-body");
+  togglePanel(filterPanelHeader, body);
+});
+
+
 
 // function makeUrl(baseUrl, params){
 //     const url = new URL(baseUrl);

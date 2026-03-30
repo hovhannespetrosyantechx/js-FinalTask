@@ -1,5 +1,7 @@
 const movieGrid = document.querySelector('.movie-grid');
 
+
+
 export function renderMovies(movies, append = false) {
     if (!append) {
         movieGrid.innerHTML = '';
@@ -22,4 +24,4 @@ export function renderMovies(movies, append = false) {
 
         movieGrid.appendChild(card);
     });
-}
+}   

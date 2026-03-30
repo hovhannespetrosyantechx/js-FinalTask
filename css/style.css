@@ -205,6 +205,8 @@ ol {
   gap: var(--spacing-sm);
 }
 .filter-range__label {
+  /* margin: var(--spacing-md); */
+
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
