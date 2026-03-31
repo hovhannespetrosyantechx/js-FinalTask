@@ -166,12 +166,12 @@ ol {
     var(--spacing-sm);
   transition: border-color var(--transition-fast);
   width: 100%;
-}
-.sort-select:hover,
+} 
+ .sort-select:hover,
 .sort-select:focus {
   border-color: var(--color-primary);
   outline: none;
-}
+} 
 
 .genre-list {
   display: flex;
@@ -205,8 +205,6 @@ ol {
   gap: var(--spacing-sm);
 }
 .filter-range__label {
-  /* margin: var(--spacing-md); */
-
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
 }
@@ -214,6 +212,24 @@ ol {
   accent-color: var(--color-primary);
   cursor: pointer;
   width: 100%;
+}
+
+.filter__options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter__option input {
+  cursor: pointer;
 }
 
 .filter-panel__search-btn {
@@ -292,6 +308,7 @@ ol {
   position: absolute;
   transform: translateY(50%);
   width: 38px;
+  z-index: 100;
 }
 .movie-card__rating-svg {
   height: calc(100% + 4px);
@@ -300,6 +317,7 @@ ol {
   top: -2px;
   transform: rotate(-90deg);
   width: calc(100% + 4px);
+  z-index: 100;
 }
 .movie-card__rating-value {
   color: var(--color-text-light);

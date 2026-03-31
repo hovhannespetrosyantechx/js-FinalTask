@@ -1,74 +1,106 @@
-import { fetchPopularMovies } from './api.js';
-import { renderMovies } from './render.js';
+import { fetchGenres, fetchMovies } from "./api.js";
+import { renderGenres, renderMovies, showLoadMoreButton } from "./render.js";
 
-const loadMoreBtn = document.querySelector('.load-more');
-const filterPanelHeader = document.getElementById("filter-panel-header");
-const sortPanelHeader  = document.getElementById("sort-panel-header");
+const state = {
+  currentPage: 1,
+  totalPages:  1,
+  isLoading:   false,
+  filters:     { sortBy: "popularity.desc", genres: [], releaseDateFrom: "", releaseDateTo: "", scoreMin: 0, minVotes: 0 },
+};
 
+function collectFilters() {
+  const activeGenres = [...document.querySelectorAll(".genre-pill--active")]
+    .map((pill) => Number(pill.dataset.genreId));
 
-let currentPage = 1;
-let totalPages = 1;
-
-document.addEventListener('DOMContentLoaded', init);
-
-async function init() {
-  const data = await fetchPopularMovies(currentPage);
-
-  renderMovies(data.movies);
-
-  totalPages = data.totalPages;
+  return {
+    sortBy:          document.getElementById("sort-select").value,
+    genres:          activeGenres,
+    releaseDateFrom: document.getElementById("release-year-from").value,
+    releaseDateTo:   document.getElementById("release-year-to").value,
+    scoreMin:        Number(document.getElementById("score-from").value),
+    minVotes:        Number(document.getElementById("min-votes").value),
+  };
 }
 
-
-
-loadMoreBtn.addEventListener('click', async () => {
-  if (currentPage >= totalPages) return;
-
-  currentPage++;
-
-  const data = await fetchPopularMovies(currentPage);
-
-  renderMovies(data.movies, true);
-});
-
-
-function togglePanel(header, body) {
+function togglePanel(header, bodyId) {
+  const body   = document.getElementById(bodyId);
   const isOpen = header.classList.contains("filter-panel__header--open");
- 
-  if (isOpen) {
-    header.classList.remove("filter-panel__header--open");
-    body.style.display = "none";
-  } else {
-    header.classList.add("filter-panel__header--open");
-    body.style.display = "";
+  header.classList.toggle("filter-panel__header--open", !isOpen);
+  body.style.display = isOpen ? "none" : "";
+}
+
+async function loadMovies() {
+  if (state.isLoading) return;
+  state.isLoading = true;
+
+  try {
+    state.filters     = collectFilters();
+    state.currentPage = 1;
+
+    const { movies, totalPages } = await fetchMovies(state.filters, 1);
+    state.totalPages = totalPages;
+
+    renderMovies(movies, false);
+    showLoadMoreButton(totalPages > 1);
+  } catch (err) {
+    console.error("Failed to load movies:", err);
+    document.getElementById("movie-grid").innerHTML =
+      `<p class="movie-grid__empty">Something went wrong. Please try again.</p>`;
+  } finally {
+    state.isLoading = false;
   }
 }
 
-sortPanelHeader.addEventListener("click", () => {
-  const body = document.getElementById("sort-panel-body");
-  togglePanel(sortPanelHeader, body);
+async function loadMoreMovies() {
+  if (state.isLoading || state.currentPage >= state.totalPages) return;
+  state.isLoading = true;
+
+  const btn = document.getElementById("load-more-btn");
+  btn.textContent = "Loading…";
+
+  try {
+    state.currentPage++;
+    const { movies, totalPages } = await fetchMovies(state.filters, state.currentPage);
+    state.totalPages = totalPages;
+
+    renderMovies(movies, true);
+    showLoadMoreButton(state.currentPage < state.totalPages);
+  } catch (err) {
+    console.error("Failed to load more:", err);
+  } finally {
+    state.isLoading  = false;
+    btn.textContent  = "Load More";
+  }
+}
+
+async function init() {
+  try {
+    const genres = await fetchGenres();
+    renderGenres(genres);
+  } catch (err) {
+    console.error("Failed to load genres:", err);
+  }
+  await loadMovies();
+}
+
+document.getElementById("search-btn").addEventListener("click", loadMovies);
+document.getElementById("load-more-btn").addEventListener("click", loadMoreMovies);
+
+document.getElementById("sort-panel-header").addEventListener("click", (e) =>
+  togglePanel(e.currentTarget, "sort-panel-body"));
+
+document.getElementById("filter-panel-header").addEventListener("click", (e) =>
+  togglePanel(e.currentTarget, "filter-panel-body"));
+
+document.getElementById("score-from").addEventListener("input", (e) => {
+  const val = Number(e.target.value);
+  document.getElementById("score-from-val").textContent = val === 0 ? "0 – 10" : `${val} – 10`;
 });
- 
-filterPanelHeader.addEventListener("click", () => {
-  const body = document.getElementById("filter-panel-body");
-  togglePanel(filterPanelHeader, body);
+
+document.getElementById("min-votes").addEventListener("input", (e) => {
+  document.getElementById("min-votes-val").textContent = e.target.value;
 });
 
+init();
 
 
-// function makeUrl(baseUrl, params){
-//     const url = new URL(baseUrl);
-
-//     if (params && typeof params === 'object'){
-//         Object.keys(params).forEach(key => {
-//             const value = params[key];
-            
-//             if (value !== null && value !== undefined){
-//                 url.searchParams.append(key, value);
-//             }
-//         });
-//     }
-// }
-
-// const mycostomurl = makeUrl('http exaple com', {name: 'ashout', age:'30', city:null });
-// fetch(mycostomurl)   

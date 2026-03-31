@@ -5,18 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Popular Movies — TMDB Clone" />
     <title>Popular Movies — TMDB Clone</title>
-    <link rel="stylesheet" href="css/variables.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <div class="page">
-
       <header class="header">
         <div class="header__inner container">
           <a class="header__logo" href="#">
-            <img src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg" alt="TMDB Logo" />
+            <img
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+              alt="TMDB Logo" />
           </a>
           <nav class="header__nav">
             <a class="header__nav-link" href="#">Movies</a>
@@ -26,11 +31,15 @@
             <a class="header__nav-link" href="#">More</a>
           </nav>
           <div class="header__actions">
-            <a href="#" class="header__nav-link"><i class="fa-solid fa-plus"></i></a>
+            <a href="#" class="header__nav-link">
+              <i class="fa-solid fa-plus"></i>
+            </a>
             <span class="header__nav-link header__nav-link--bordered">EN</span>
             <a href="#" class="header__nav-link">Login</a>
             <a href="#" class="header__nav-link">Join TMDB</a>
-            <a href="#" class="header__nav-link"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#" class="header__nav-link">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
           </div>
         </div>
       </header>
@@ -43,9 +52,12 @@
         <main class="content">
           <aside class="content__sidebar">
             <div class="filter-panel">
-              <div class="filter-panel__header filter-panel__header--open" id="sort-panel-header">
+              <div
+                class="filter-panel__header filter-panel__header--open"
+                id="sort-panel-header">
                 <span class="filter-panel__title">Sort</span>
-                <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+                <i
+                  class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
               </div>
               <div class="filter-panel__body" id="sort-panel-body">
                 <select class="sort-select" id="sort-select">
@@ -53,8 +65,12 @@
                   <option value="popularity.asc">Popularity Ascending</option>
                   <option value="vote_average.desc">Rating Descending</option>
                   <option value="vote_average.asc">Rating Ascending</option>
-                  <option value="primary_release_date.desc">Release Date Descending</option>
-                  <option value="primary_release_date.asc">Release Date Ascending</option>
+                  <option value="primary_release_date.desc">
+                    Release Date Descending
+                  </option>
+                  <option value="primary_release_date.asc">
+                    Release Date Ascending
+                  </option>
                   <option value="title.asc">Title (A-Z)</option>
                   <option value="title.desc">Title (Z-A)</option>
                 </select>
@@ -62,35 +78,105 @@
             </div>
 
             <div class="filter-panel">
-              <div class="filter-panel__header filter-panel__header--open" id="filter-panel-header">
+              <div
+                class="filter-panel__header filter-panel__header--open"
+                id="filter-panel-header">
                 <span class="filter-panel__title">Filters</span>
-                <i class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+                <i
+                  class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
               </div>
               <div class="filter-panel__body" id="filter-panel-body">
-
                 <p class="filter-range__label">Genres</p>
+
                 <ul class="genre-list" id="genre-list"></ul>
 
+                <div class="filter filter--release-types">
+                  <p class="filter-range__label">Release Dates</p>
+
+                  <div class="filter__options">
+                    <label class="filter__option">
+                      <input type="checkbox" value="1" />
+                      <span>Premiere</span>
+                    </label>
+
+                    <label class="filter__option">
+                      <input type="checkbox" value="2" />
+                      <span>Theatrical (limited)</span>
+                    </label>
+
+                    <label class="filter__option">
+                      <input type="checkbox" value="3" />
+                      <span>Theatrical</span>
+                    </label>
+
+                    <label class="filter__option">
+                      <input type="checkbox" value="4" />
+                      <span>Digital</span>
+                    </label>
+
+                    <label class="filter__option">
+                      <input type="checkbox" value="5" />
+                      <span>Physical</span>
+                    </label>
+
+                    <label class="filter__option">
+                      <input type="checkbox" value="6" />
+                      <span>TV</span>
+                    </label>
+                  </div>
+                </div>
                 <div class="filter-range">
-                  <label class="filter-range__label" for="release-year-from">Release Date From</label>
-                  <input class="filter-range__input" type="date" id="release-year-from" />
-                  <label class="filter-range__label" for="release-year-to">Release Date To</label>
-                  <input class="filter-range__input" type="date" id="release-year-to" />
+                  <label class="filter-range__label" for="release-year-from">
+                    Release Date From
+                  </label>
+                  <input
+                    class="filter-range__input"
+                    type="date"
+                    id="release-year-from" />
+                  <label class="filter-range__label" for="release-year-to">
+                    Release Date To
+                  </label>
+                  <input
+                    class="filter-range__input"
+                    type="date"
+                    id="release-year-to" />
                 </div>
 
                 <div class="filter-range">
-                  <label class="filter-range__label" for="score-from">User Score</label>
-                  <input class="filter-range__input" type="range" id="score-from" min="0" max="10" step="1" value="0" />
-                  <span class="filter-range__label" id="score-from-val">0 - 10</span>
+                  <label class="filter-range__label" for="score-from">
+                    User Score
+                  </label>
+                  <input
+                    class="filter-range__input"
+                    type="range"
+                    id="score-from"
+                    min="0"
+                    max="10"
+                    step="1"
+                    value="0" />
+                  <span class="filter-range__label" id="score-from-val">
+                    0-10
+                  </span>
                 </div>
 
                 <div class="filter-range">
-                  <label class="filter-range__label" for="min-votes">Minimum User Votes</label>
-                  <input class="filter-range__input" type="range" id="min-votes" min="0" max="500" step="50" value="0" />
+                  <label class="filter-range__label" for="min-votes"
+                    >Minimum User Votes</label
+                  >
+                  <input
+                    class="filter-range__input"
+                    type="range"
+                    id="min-votes"
+                    min="0"
+                    max="500"
+                    step="50"
+                    value="0" />
                   <span class="filter-range__label" id="min-votes-val">0</span>
                 </div>
 
-                <button class="filter-panel__search-btn" id="search-btn">Search</button>
+                <button class="filter-panel__search-btn" id="search-btn">
+                  Search
+                </button>
               </div>
             </div>
           </aside>
@@ -105,7 +191,10 @@
       <footer class="footer">
         <div class="footer__inner container">
           <div class="footer__brand">
-            <img class="footer__logo" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg" alt="TMDB Logo" />
+            <img
+              class="footer__logo"
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
+              alt="TMDB Logo" />
             <button class="footer__join-btn">Join the Community</button>
           </div>
 
@@ -142,7 +231,6 @@
           </div>
         </div>
       </footer>
-
     </div>
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/api.js"></script>
