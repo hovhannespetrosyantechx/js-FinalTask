@@ -260,7 +260,7 @@ ol {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   cursor: pointer;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
   transition:
     transform var(--transition-base),
@@ -276,12 +276,14 @@ ol {
   overflow: hidden;
   position: relative;
   width: 100%;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 .movie-card__poster {
   height: 100%;
   object-fit: cover;
   transition: transform var(--transition-base);
   width: 100%;
+  position: relative;
 }
 .movie-card:hover .movie-card__poster {
   transform: scale(1.03);
@@ -300,32 +302,35 @@ ol {
   align-items: center;
   background-color: var(--color-rating-bg);
   border-radius: var(--radius-full);
-  bottom: 0;
   display: flex;
-  height: 38px;
+  height: 34px;
   justify-content: center;
   left: var(--spacing-sm);
   position: absolute;
-  transform: translateY(50%);
-  width: 38px;
-  z-index: 100;
+  transform: translateY(-17px);
+  width: 34px;
 }
 .movie-card__rating-svg {
-  height: calc(100% + 4px);
+  height: 38px;
   left: -2px;
   position: absolute;
   top: -2px;
   transform: rotate(-90deg);
-  width: calc(100% + 4px);
-  z-index: 100;
+  width: 38px;
 }
 .movie-card__rating-value {
   color: var(--color-text-light);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   line-height: 1;
-  position: relative;
-  z-index: 1;
+  font-weight: 700;
+  display: flex;
+  align-items: flex-start;
+}
+.percent-symbol {
+  font-size: 5px; 
+  margin-top: 2px;
+  margin-left: 1px;
 }
 .movie-card__rating-value sup {
   font-size: 8px;

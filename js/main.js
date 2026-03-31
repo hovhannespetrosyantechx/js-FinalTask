@@ -94,7 +94,7 @@ document.getElementById("filter-panel-header").addEventListener("click", (e) =>
 
 document.getElementById("score-from").addEventListener("input", (e) => {
   const val = Number(e.target.value);
-  document.getElementById("score-from-val").textContent = val === 0 ? "0 – 10" : `${val} – 10`;
+  document.getElementById("score-from-val").textContent = val === 0 ? "0 - 10" : `${val} - 10`;
 });
 
 document.getElementById("min-votes").addEventListener("input", (e) => {
