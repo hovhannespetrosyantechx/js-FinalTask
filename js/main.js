@@ -3,27 +3,32 @@ import { renderGenres, renderMovies, showLoadMoreButton } from "./render.js";
 
 const state = {
   currentPage: 1,
-  totalPages:  1,
-  isLoading:   false,
-  filters:     { sortBy: "popularity.desc", genres: [], releaseDateFrom: "", releaseDateTo: "", scoreMin: 0, minVotes: 0 },
+  totalPages: 1,
+  isLoading: false,
+  filters: { sortBy: "popularity.desc", genres: [], releaseDateFrom: "", releaseDateTo: "", scoreMin: 0, minVotes: 0 },
 };
 
 function collectFilters() {
   const activeGenres = [...document.querySelectorAll(".genre-pill--active")]
     .map((pill) => Number(pill.dataset.genreId));
 
+  const releaseTypes = [...document.querySelectorAll('input[name="release-type"]:checked')]
+    .map(input => input.value);
+
   return {
-    sortBy:          document.getElementById("sort-select").value,
-    genres:          activeGenres,
-    releaseDateFrom: document.getElementById("release-year-from").value,
-    releaseDateTo:   document.getElementById("release-year-to").value,
-    scoreMin:        Number(document.getElementById("score-from").value),
-    minVotes:        Number(document.getElementById("min-votes").value),
+    sortBy: document.getElementById("sort-select").value,
+    genres: activeGenres,
+    releaseDateFrom: document.getElementById("date-from").value,
+    releaseDateTo: document.getElementById("date-to").value,
+    scoreMin: Number(document.getElementById("score-from").value),
+    minVotes: Number(document.getElementById("min-votes").value),
+    releaseTypes: releaseTypes,
+    watchRegion: document.getElementById("release-country").value,
   };
 }
 
 function togglePanel(header, bodyId) {
-  const body   = document.getElementById(bodyId);
+  const body = document.getElementById(bodyId);
   const isOpen = header.classList.contains("filter-panel__header--open");
   header.classList.toggle("filter-panel__header--open", !isOpen);
   body.style.display = isOpen ? "none" : "";
@@ -34,7 +39,7 @@ async function loadMovies() {
   state.isLoading = true;
 
   try {
-    state.filters     = collectFilters();
+    state.filters = collectFilters();
     state.currentPage = 1;
 
     const { movies, totalPages } = await fetchMovies(state.filters, 1);
@@ -68,8 +73,8 @@ async function loadMoreMovies() {
   } catch (err) {
     console.error("Failed to load more:", err);
   } finally {
-    state.isLoading  = false;
-    btn.textContent  = "Load More";
+    state.isLoading = false;
+    btn.textContent = "Load More";
   }
 }
 
@@ -102,5 +107,4 @@ document.getElementById("min-votes").addEventListener("input", (e) => {
 });
 
 init();
-
 

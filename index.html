@@ -17,7 +17,7 @@
   <body>
     <div class="page">
       <header class="header">
-        <div class="header__inner container"> 
+        <div class="header__inner container">
           <a class="header__logo" href="#">
             <img
               src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
@@ -60,6 +60,7 @@
                   class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
               </div>
               <div class="filter-panel__body" id="sort-panel-body">
+                <p class="filter-range__label">Sort Results By</p>
                 <select class="sort-select" id="sort-select">
                   <option value="popularity.desc">Popularity Descending</option>
                   <option value="popularity.asc">Popularity Ascending</option>
@@ -85,61 +86,157 @@
                 <i
                   class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
               </div>
+
               <div class="filter-panel__body" id="filter-panel-body">
-                <p class="filter-range__label">Genres</p>
+                <div class="filter-section">
+                  <p class="filter-section__label">Show me</p>
 
-                <ul class="genre-list" id="genre-list"></ul>
-
-                <div class="filter filter--release-types">
-                  <p class="filter-range__label">Release Dates</p>
-
-                  <div class="filter__options">
-                    <label class="filter__option">
-                      <input type="checkbox" value="1" />
-                      <span>Premiere</span>
-                    </label>
-
-                    <label class="filter__option">
-                      <input type="checkbox" value="2" />
-                      <span>Theatrical (limited)</span>
-                    </label>
-
-                    <label class="filter__option">
-                      <input type="checkbox" value="3" />
-                      <span>Theatrical</span>
-                    </label>
-
-                    <label class="filter__option">
-                      <input type="checkbox" value="4" />
-                      <span>Digital</span>
-                    </label>
-
-                    <label class="filter__option">
-                      <input type="checkbox" value="5" />
-                      <span>Physical</span>
-                    </label>
-
-                    <label class="filter__option">
-                      <input type="checkbox" value="6" />
-                      <span>TV</span>
-                    </label>
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="everything" />
+                    <label for="everything">Everything</label>
+                  </div>
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="not-seen" />
+                    <label for="not-seen">Movies I Haven't Seen</label>
+                  </div>
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="seen" />
+                    <label for="seen">Movies I Have Seen</label>
                   </div>
                 </div>
-                <div class="filter-range">
-                  <label class="filter-range__label" for="release-year-from">
-                    Release Date From
-                  </label>
-                  <input
-                    class="filter-range__input"
-                    type="date"
-                    id="release-year-from" />
-                  <label class="filter-range__label" for="release-year-to">
-                    Release Date To
-                  </label>
-                  <input
-                    class="filter-range__input"
-                    type="date"
-                    id="release-year-to" />
+
+                <div class="filter-section">
+                  <p class="filter-section__label">Genres</p>
+                  <ul class="genre-list" id="genre-list"></ul>
+                </div>
+
+                <ul class="filter__options filter__options--top">
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="search-all-releases"
+                      name="search-all-releases" />
+                    <label for="search-all-releases"
+                      >Search all releases?</label
+                    >
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="search-all-countries"
+                      name="search-all-countries" />
+                    <label for="search-all-countries"
+                      >Search all countries?</label
+                    >
+                  </li>
+                </ul>
+
+                <div class="release-dates__country">
+                  <select
+                    class="sort-select release-dates__country-select"
+                    id="release-country">
+                    <option value="US">🇺🇸 United States</option>
+                    <option value="GB">🇬🇧 United Kingdom</option>
+                    <option value="DE">🇩🇪 Germany</option>
+                  </select>
+                </div>
+
+                <ul class="filter__options filter__options--types">
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-theatrical-limited"
+                      name="release-type"
+                      value="1" />
+                    <label for="release-theatrical-limited"
+                      >Theatrical (limited)</label
+                    >
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-theatrical"
+                      name="release-type"
+                      value="2" />
+                    <label for="release-theatrical">Theatrical</label>
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-premiere"
+                      name="release-type"
+                      value="4" />
+                    <label for="release-premiere">Premiere</label>
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-digital"
+                      name="release-type"
+                      value="6" />
+                    <label for="release-digital">Digital</label>
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-physical"
+                      name="release-type"
+                      value="5" />
+                    <label for="release-physical">Physical</label>
+                  </li>
+                  <li class="filter__option">
+                    <input
+                      type="checkbox"
+                      id="release-tv"
+                      name="release-type"
+                      value="3" />
+                    <label for="release-tv">TV</label>
+                  </li>
+                </ul>
+                <!-- relase date -->
+                <div class="date-filter">
+                  <div class="date-forms">
+                    <label class="data-label" for="date-from"> from: </label>
+                    <span class="date-field">
+                      <input
+                        type="text"
+                        class="date-input"
+                        id="date-input-from"
+                        autocomplete="off"
+                        value="" />
+                      <button class="date-button">
+                        <i class="fa-regular fa-calendar"></i>
+                      </button>
+                      <input
+                        type="date"
+                        id="date-from"
+                        name="date-from"
+                        value=""
+                        min="2000-01-01"
+                        max="2099-12-31" />
+                    </span>
+                  </div>
+
+                  <div class="date-forms">
+                    <label class="data-label" for="date-to">to:</label>
+                    <span class="date-field">
+                      <input
+                        type="text"
+                        class="date-input"
+                        id="date-input-to"
+                        autocomplete="off" />
+                      <button class="date-button">
+                        <i class="fa-regular fa-calendar"></i>
+                      </button>
+                      <input
+                        type="date"
+                        id="date-to"
+                        name="date-to"
+                        value=""
+                        min="2000-01-01"
+                        max="2099-12-31" />
+                    </span>
+                  </div>
                 </div>
 
                 <div class="filter-range">
@@ -160,9 +257,9 @@
                 </div>
 
                 <div class="filter-range">
-                  <label class="filter-range__label" for="min-votes"
-                    >Minimum User Votes</label
-                  >
+                  <label class="filter-range__label" for="min-votes">
+                    Minimum User Votes
+                  </label>
                   <input
                     class="filter-range__input"
                     type="range"
