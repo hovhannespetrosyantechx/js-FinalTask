@@ -62,6 +62,9 @@ export function renderMovies(movies, append = false) {
             ? `<img class="movie-card__poster" src="${IMG_BASE_URL}${movie.poster_path}" alt="${movie.title}" loading="lazy"/>`
             : `<div class="movie-card__poster--placeholder"><i class="fa-solid fa-film"></i></div>`}
       </div>
+      <button class="movie-card__options" aria-label="Open options menu">
+        <i class="fa-solid fa-ellipsis"></i>
+      </button>
       <div class="movie-card__rating">
         ${buildRatingSvg(score)}
         <span class="movie-card__rating-value">
