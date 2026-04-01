@@ -95,6 +95,45 @@ export function renderMovies(movies, append = false) {
   });
 }
 
+export function renderKeywordSuggestions(keywords, onSelectCallback) {
+  const suggestionsBox = document.getElementById('keyword-suggestions');
+  suggestionsBox.innerHTML = '';
+
+  if (!keywords || keywords.length === 0) {
+    suggestionsBox.style.display = 'none';
+    return;
+  }
+
+  keywords.forEach(kw => {
+    const li = document.createElement('li');
+    li.className = 'keyword-suggestion-item';
+    li.textContent = kw.name;
+    
+    // Tell main.js which keyword was clicked
+    li.addEventListener('click', () => onSelectCallback(kw));
+    
+    suggestionsBox.appendChild(li);
+  });
+  
+  suggestionsBox.style.display = 'block';
+}
+
+export function renderActiveKeywordPills(selectedKeywordsData, onRemoveCallback) {
+  const selectedBox = document.getElementById('selected-keywords');
+  selectedBox.innerHTML = '';
+
+  selectedKeywordsData.forEach(kw => {
+    const li = document.createElement('li');
+    li.className = 'keyword-pill keyword-pill--active'; 
+    li.innerHTML = `${kw.name} <i class="fa-solid fa-xmark"></i>`;
+    
+    // Tell main.js to remove this specific keyword ID
+    li.addEventListener('click', () => onRemoveCallback(kw.id));
+    
+    selectedBox.appendChild(li);
+  });
+}
+
 export function showLoadMoreButton(visible) {
   document.getElementById("load-more-btn").style.display = visible ? "block" : "none";
 }

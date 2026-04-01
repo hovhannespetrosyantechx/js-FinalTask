@@ -1,5 +1,5 @@
-import { fetchGenres, fetchMovies , fetchLanguages} from "./api.js";
-import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages} from "./render.js";
+import { fetchGenres, fetchMovies, fetchLanguages, fetchKeywordSuggestions } from "./api.js";
+import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages, renderKeywordSuggestions, renderActiveKeywordPills } from "./render.js";
 
 const state = {
   currentPage: 1,
@@ -8,6 +8,8 @@ const state = {
   filters: { sortBy: "popularity.desc", genres: [], releaseDateFrom: "", releaseDateTo: "", scoreMin: 0, minVotes: 0 },
 };
 
+let selectedKeywordsData = [];
+
 function collectFilters() {
   const activeGenres = [...document.querySelectorAll(".genre-pill--active")]
     .map((pill) => Number(pill.dataset.genreId));
@@ -15,10 +17,13 @@ function collectFilters() {
   const releaseTypes = [...document.querySelectorAll('input[name="release-type"]:checked')]
     .map(input => input.value);
 
+  const keywordIds = selectedKeywordsData.map(kw => kw.id);
+
   return {
     sortBy: document.getElementById("sort-select").value,
     language: document.getElementById("language-select").value,
     genres: activeGenres,
+    keywords: keywordIds,
     releaseDateFrom: document.getElementById("date-from").value,
     releaseDateTo: document.getElementById("date-to").value,
     scoreMin: Number(document.getElementById("score-min").value),
@@ -42,6 +47,8 @@ async function loadMovies() {
   try {
     state.filters = collectFilters();
     state.currentPage = 1;
+
+    console.log("Current Filters:", state.filters);
 
     const { movies, totalPages } = await fetchMovies(state.filters, 1);
     state.totalPages = totalPages;
@@ -205,9 +212,68 @@ function initDatePickers() {
   });
 }
 
+
+function initKeywordSearch() {
+  const input = document.getElementById('keyword-input');
+  const suggestionsBox = document.getElementById('keyword-suggestions');
+  let timeout = null;
+
+  // Listen for typing
+  input.addEventListener('input', (e) => {
+    clearTimeout(timeout);
+    const query = e.target.value.trim();
+
+    if (query.length < 2) {
+      suggestionsBox.style.display = 'none';
+      return;
+    }
+
+    timeout = setTimeout(async () => {
+      try {
+        const results = await fetchKeywordSuggestions(query);
+
+        // Use the render.js function, passing a callback for when an item is clicked
+        renderKeywordSuggestions(results, (selectedKeyword) => {
+          addKeyword(selectedKeyword);
+          input.value = ''; // Clear input
+          suggestionsBox.style.display = 'none'; // Hide dropdown
+        });
+
+      } catch (err) {
+        console.error("Failed to fetch keywords", err);
+      }
+    }, 300);
+  });
+
+  // State management functions
+  function addKeyword(kw) {
+    if (!selectedKeywordsData.find(k => k.id === kw.id)) {
+      selectedKeywordsData.push(kw);
+      refreshKeywordPills();
+    }
+  }
+
+  function refreshKeywordPills() {
+    // Use the render.js function, passing a callback for when a pill is clicked to remove it
+    renderActiveKeywordPills(selectedKeywordsData, (keywordIdToRemove) => {
+      selectedKeywordsData = selectedKeywordsData.filter(k => k.id !== keywordIdToRemove);
+      refreshKeywordPills();
+    });
+  }
+
+  // Hide suggestions when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+      suggestionsBox.style.display = 'none';
+    }
+  });
+}
+
+
 async function init() {
   initFilterToggles();
   initDatePickers();
+  initKeywordSearch();
   initDualSlider("slider-score", (min, max) => `${min} - ${max}`);
   initDualSlider("slider-runtime", (min, max) => `${min} - ${max} minutes`);
   initSingleSlider("slider-votes", (val) => val);

@@ -322,11 +322,27 @@
                   </span>
                 </div>
 
-                <button class="filter-panel__search-btn" id="search-btn">
-                  Search
-                </button>
+                <div class="filter-range">
+                  <p class="filter-section__label">Keywords</p>
+                  <div class="keyword-wrapper">
+                    <input
+                      type="text"
+                      id="keyword-input"
+                      class="sort-select"
+                      placeholder="Filter by keywords..."
+                      autocomplete="off" />
+                    <ul
+                      id="keyword-suggestions"
+                      class="keyword-suggestions"></ul>
+                  </div>
+                  <ul class="genre-list" id="selected-keywords"></ul>
+                </div>
+                
               </div>
             </div>
+            <button class="filter-panel__search-btn" id="search-btn">
+              Search
+            </button>
           </aside>
 
           <section class="content__main">

@@ -17,6 +17,11 @@ export async function fetchLanguages() {
   return await apiFetch("/configuration/languages");
 }
 
+export async function fetchKeywordSuggestions(query) {
+  const data = await apiFetch("/search/keyword", { query, page: 1 });
+  return data.results; 
+}
+
 export async function fetchMovies(filters, page = 1) {
   const params = { sort_by: filters.sortBy, page };
 
@@ -25,6 +30,9 @@ export async function fetchMovies(filters, page = 1) {
   }
   if (filters.language) {
     params.with_original_language = filters.language;
+  }
+  if (filters.keywords && filters.keywords.length > 0) {
+    params.with_keywords = filters.keywords.join(",");
   }
   if (filters.releaseDateFrom) {
     params["primary_release_date.gte"] = filters.releaseDateFrom;

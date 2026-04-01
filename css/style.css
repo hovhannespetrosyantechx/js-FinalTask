@@ -118,7 +118,6 @@ ol {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-panel);
   margin-bottom: var(--spacing-md);
-  overflow: hidden;
 }
 .filter-panel__header {
   align-items: center;
@@ -364,7 +363,7 @@ ol {
   transform: translateY(-50%);
   width: 100%;
   height: 4px;
-  background-color: var(--color-border-panel); 
+  background-color: var(--color-border-panel);
   border-radius: 2px;
 }
 
@@ -391,7 +390,7 @@ ol {
 
 .range-slider__input::-webkit-slider-thumb {
   appearance: none;
-  pointer-events: auto; 
+  pointer-events: auto;
   width: 16px;
   height: 16px;
   background-color: #ffffff;
@@ -400,7 +399,6 @@ ol {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }
-
 
 .range-slider__input::-moz-range-thumb {
   appearance: none;
@@ -412,6 +410,77 @@ ol {
   border: 1px solid var(--color-border-panel);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+/* Add to style.css */
+
+.keyword-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.keyword-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-panel);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  box-shadow: var(--shadow-panel);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none; /* Hidden by default */
+  margin: 0;
+  padding: 0;
+}
+
+.keyword-suggestion-item {
+  padding: var(--spacing-sm) var(--spacing-md);
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color var(--transition-fast);
+}
+
+.keyword-suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.keyword-suggestion-item:hover {
+  background-color: #f5f5f5;
+}
+
+/* Tweak the pill for removable keywords */
+.keyword-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: transparent;
+  border: 1px solid var(--color-border-panel);
+  border-radius: 20px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-xs) var(--spacing-md);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+.keyword-pill i {
+  font-size: 12px;
+  opacity: 0.7;
+}
+.keyword-pill:hover,
+.keyword-pill--active {
+  opacity: 1;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 .filter-panel__search-btn {
@@ -644,4 +713,3 @@ ol {
 .footer__link:hover {
   color: var(--color-text-light);
 }
-
