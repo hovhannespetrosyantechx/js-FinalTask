@@ -324,7 +324,7 @@ ol {
 #date-from {
   position: absolute;
   opacity: 0;
-  pointer-events: none; /* Prevents ghost-clicking the invisible input */
+  pointer-events: none; 
   left: 0;
   width: 100%;
   height: 100%;
@@ -353,7 +353,7 @@ ol {
 .range-slider {
   position: relative;
   width: 100%;
-  height: 24px; /* Gives a larger hit area for the thumb */
+  height: 24px; 
   margin-top: var(--spacing-xs);
 }
 
@@ -412,7 +412,6 @@ ol {
   cursor: pointer;
 }
 
-/* Add to style.css */
 
 .keyword-wrapper {
   position: relative;
@@ -432,7 +431,7 @@ ol {
   max-height: 200px;
   overflow-y: auto;
   z-index: 10;
-  display: none; /* Hidden by default */
+  display: none;
   margin: 0;
   padding: 0;
 }
@@ -453,7 +452,6 @@ ol {
   background-color: #f5f5f5;
 }
 
-/* Tweak the pill for removable keywords */
 .keyword-pill {
   display: flex;
   align-items: center;
@@ -712,4 +710,52 @@ ol {
 }
 .footer__link:hover {
   color: var(--color-text-light);
+}
+
+.cookie-banner {
+  background-color: rgba(3, 37, 65, 0.95);
+  bottom: 0;
+  color: #fff;
+  display: none;
+  left: 0;
+  padding: var(--spacing-lg) 0;
+  position: fixed;
+  right: 0;
+  z-index: 2000;
+}
+
+.cookie-banner__inner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  text-align: center;
+}
+
+.cookie-banner__text {
+  font-size: var(--font-size-sm);
+  max-width: 800px;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.cookie-banner__btn {
+  background-color: var(--color-primary);
+  border-radius: 5px;
+  color: #fff;
+  font-weight: var(--font-weight-bold);
+  padding: 8px 20px;
+  transition: opacity var(--transition-base);
+}
+
+.cookie-banner__btn:hover {
+  opacity: 0.8;
+}
+
+.cookie-banner__btn--outline {
+  background: transparent;
+  border: 2px solid var(--color-primary);
 }

@@ -34,6 +34,12 @@ export async function fetchMovies(filters, page = 1) {
   if (filters.keywords && filters.keywords.length > 0) {
     params.with_keywords = filters.keywords.join(",");
   }
+  if (filters.releaseTypes && filters.releaseTypes.length > 0) {
+    params.with_release_type = filters.releaseTypes.join("|");
+  }
+  if (filters.watchRegion) {
+    params.region = filters.watchRegion;
+  }
   if (filters.releaseDateFrom) {
     params["primary_release_date.gte"] = filters.releaseDateFrom;
   }
@@ -43,8 +49,17 @@ export async function fetchMovies(filters, page = 1) {
   if (filters.scoreMin > 0) {
     params["vote_average.gte"] = filters.scoreMin;
   }
+  if (filters.scoreMax > 0 && filters.scoreMax < 10) {
+    params["vote_average.lte"] = filters.scoreMax;
+  }
   if (filters.minVotes > 0) {
     params["vote_count.gte"] = filters.minVotes;
+  }
+  if (filters.runtimeMin > 0) {
+    params["with_runtime.gte"] = filters.runtimeMin;
+  }
+  if (filters.runtimeMax > 0 && filters.runtimeMax < 400) {
+    params["with_runtime.lte"] = filters.runtimeMax;
   }
 
   const data = await apiFetch("/discover/movie", params);

@@ -27,7 +27,10 @@ function collectFilters() {
     releaseDateFrom: document.getElementById("date-from").value,
     releaseDateTo: document.getElementById("date-to").value,
     scoreMin: Number(document.getElementById("score-min").value),
+    scoreMax: Number(document.getElementById("score-max").value),
     minVotes: Number(document.getElementById("min-votes").value),
+    runtimeMin: Number(document.getElementById("runtime-min").value),
+    runtimeMax: Number(document.getElementById("runtime-max").value),
     releaseTypes: releaseTypes,
     watchRegion: document.getElementById("release-country").value,
   };
@@ -218,7 +221,6 @@ function initKeywordSearch() {
   const suggestionsBox = document.getElementById('keyword-suggestions');
   let timeout = null;
 
-  // Listen for typing
   input.addEventListener('input', (e) => {
     clearTimeout(timeout);
     const query = e.target.value.trim();
@@ -232,11 +234,10 @@ function initKeywordSearch() {
       try {
         const results = await fetchKeywordSuggestions(query);
 
-        // Use the render.js function, passing a callback for when an item is clicked
         renderKeywordSuggestions(results, (selectedKeyword) => {
           addKeyword(selectedKeyword);
-          input.value = ''; // Clear input
-          suggestionsBox.style.display = 'none'; // Hide dropdown
+          input.value = ''; 
+          suggestionsBox.style.display = 'none';
         });
 
       } catch (err) {
@@ -245,7 +246,6 @@ function initKeywordSearch() {
     }, 300);
   });
 
-  // State management functions
   function addKeyword(kw) {
     if (!selectedKeywordsData.find(k => k.id === kw.id)) {
       selectedKeywordsData.push(kw);
@@ -254,14 +254,12 @@ function initKeywordSearch() {
   }
 
   function refreshKeywordPills() {
-    // Use the render.js function, passing a callback for when a pill is clicked to remove it
     renderActiveKeywordPills(selectedKeywordsData, (keywordIdToRemove) => {
       selectedKeywordsData = selectedKeywordsData.filter(k => k.id !== keywordIdToRemove);
       refreshKeywordPills();
     });
   }
 
-  // Hide suggestions when clicking outside
   document.addEventListener('click', (e) => {
     if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
       suggestionsBox.style.display = 'none';
@@ -269,14 +267,46 @@ function initKeywordSearch() {
   });
 }
 
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = `${name}=${value};${expires};path=/;SameSite=Lax`;
+}
+
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function initCookieBanner() {
+  const banner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+
+  if (!getCookie("tmdb_consent")) {
+    banner.style.display = 'block';
+  }
+
+  acceptBtn.addEventListener('click', () => {
+    setCookie("tmdb_consent", "true", 365);
+    banner.style.display = 'none';
+  });
+}
 
 async function init() {
   initFilterToggles();
   initDatePickers();
   initKeywordSearch();
   initDualSlider("slider-score", (min, max) => `${min} - ${max}`);
-  initDualSlider("slider-runtime", (min, max) => `${min} - ${max} minutes`);
+  initDualSlider("slider-runtime", (min, max) => { return `${min} - ${max} minutes`; }, 0, 400);
   initSingleSlider("slider-votes", (val) => val);
+  initCookieBanner();
   try {
     const [genres, languages] = await Promise.all([
       fetchGenres(),
