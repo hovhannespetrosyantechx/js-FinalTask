@@ -88,8 +88,8 @@
               </div>
 
               <div class="filter-panel__body" id="filter-panel-body">
-                <div class="filter-section">
-                  <p class="filter-section__label">Show me</p>
+                <div class="filter-range">
+                  <p class="filter-range__label">Show me</p>
 
                   <div class="filter-radio">
                     <input type="radio" name="show" id="everything" />
@@ -105,170 +105,214 @@
                   </div>
                 </div>
 
-                <div class="filter-section">
-                  <p class="filter-section__label">Genres</p>
+                <div class="filter-range">
+                  <p class="filter-range__label">Release Dates</p>
+                  <ul class="filter__options filter__options--top">
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="search-all-releases"
+                        name="search-all-releases" />
+                      <label for="search-all-releases"
+                        >Search all releases?</label
+                      >
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="search-all-countries"
+                        name="search-all-countries" />
+                      <label for="search-all-countries"
+                        >Search all countries?</label
+                      >
+                    </li>
+                  </ul>
+
+                  <div class="release-dates__country">
+                    <select
+                      class="sort-select release-dates__country-select"
+                      id="release-country">
+                      <option value="US">🇺🇸 United States</option>
+                      <option value="GB">🇬🇧 United Kingdom</option>
+                      <option value="DE">🇩🇪 Germany</option>
+                    </select>
+                  </div>
+
+                  <ul class="filter__options filter__options--types">
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-theatrical-limited"
+                        name="release-type"
+                        value="1" />
+                      <label for="release-theatrical-limited"
+                        >Theatrical (limited)</label
+                      >
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-theatrical"
+                        name="release-type"
+                        value="2" />
+                      <label for="release-theatrical">Theatrical</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-premiere"
+                        name="release-type"
+                        value="4" />
+                      <label for="release-premiere">Premiere</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-digital"
+                        name="release-type"
+                        value="6" />
+                      <label for="release-digital">Digital</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-physical"
+                        name="release-type"
+                        value="5" />
+                      <label for="release-physical">Physical</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-tv"
+                        name="release-type"
+                        value="3" />
+                      <label for="release-tv">TV</label>
+                    </li>
+                  </ul>
+
+                  <div class="date-filter">
+                    <div class="date-forms">
+                      <label class="data-label" for="date-from"> from: </label>
+                      <span class="date-field">
+                        <input
+                          type="text"
+                          class="date-input"
+                          id="date-input-from"
+                          autocomplete="off"
+                          value="" />
+                        <button class="date-button">
+                          <i class="fa-regular fa-calendar"></i>
+                        </button>
+                        <input
+                          type="date"
+                          id="date-from"
+                          name="date-from"
+                          value=""
+                          min="2000-01-01"
+                          max="2099-12-31" />
+                      </span>
+                    </div>
+
+                    <div class="date-forms">
+                      <label class="data-label" for="date-to">to:</label>
+                      <span class="date-field">
+                        <input
+                          type="text"
+                          class="date-input"
+                          id="date-input-to"
+                          autocomplete="off" />
+                        <button class="date-button">
+                          <i class="fa-regular fa-calendar"></i>
+                        </button>
+                        <input
+                          type="date"
+                          id="date-to"
+                          name="date-to"
+                          value=""
+                          min="2000-01-01"
+                          max="2099-12-31" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-range">
+                  <p class="filter-range__label">Genres</p>
+
                   <ul class="genre-list" id="genre-list"></ul>
                 </div>
 
-                <ul class="filter__options filter__options--top">
-                  <li class="filter__option">
+                <div class="filter-range">
+                  <label class="filter-range__label">User Score</label>
+                  <div class="range-slider" id="slider-score">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
                     <input
-                      type="checkbox"
-                      id="search-all-releases"
-                      name="search-all-releases" />
-                    <label for="search-all-releases"
-                      >Search all releases?</label
-                    >
-                  </li>
-                  <li class="filter__option">
+                      class="range-slider__input"
+                      type="range"
+                      id="score-min"
+                      min="0"
+                      max="10"
+                      step="1"
+                      value="0" />
                     <input
-                      type="checkbox"
-                      id="search-all-countries"
-                      name="search-all-countries" />
-                    <label for="search-all-countries"
-                      >Search all countries?</label
-                    >
-                  </li>
-                </ul>
-
-                <div class="release-dates__country">
-                  <select
-                    class="sort-select release-dates__country-select"
-                    id="release-country">
-                    <option value="US">🇺🇸 United States</option>
-                    <option value="GB">🇬🇧 United Kingdom</option>
-                    <option value="DE">🇩🇪 Germany</option>
-                  </select>
-                </div>
-
-                <ul class="filter__options filter__options--types">
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-theatrical-limited"
-                      name="release-type"
-                      value="1" />
-                    <label for="release-theatrical-limited"
-                      >Theatrical (limited)</label
-                    >
-                  </li>
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-theatrical"
-                      name="release-type"
-                      value="2" />
-                    <label for="release-theatrical">Theatrical</label>
-                  </li>
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-premiere"
-                      name="release-type"
-                      value="4" />
-                    <label for="release-premiere">Premiere</label>
-                  </li>
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-digital"
-                      name="release-type"
-                      value="6" />
-                    <label for="release-digital">Digital</label>
-                  </li>
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-physical"
-                      name="release-type"
-                      value="5" />
-                    <label for="release-physical">Physical</label>
-                  </li>
-                  <li class="filter__option">
-                    <input
-                      type="checkbox"
-                      id="release-tv"
-                      name="release-type"
-                      value="3" />
-                    <label for="release-tv">TV</label>
-                  </li>
-                </ul>
-                <!-- relase date -->
-                <div class="date-filter">
-                  <div class="date-forms">
-                    <label class="data-label" for="date-from"> from: </label>
-                    <span class="date-field">
-                      <input
-                        type="text"
-                        class="date-input"
-                        id="date-input-from"
-                        autocomplete="off"
-                        value="" />
-                      <button class="date-button">
-                        <i class="fa-regular fa-calendar"></i>
-                      </button>
-                      <input
-                        type="date"
-                        id="date-from"
-                        name="date-from"
-                        value=""
-                        min="2000-01-01"
-                        max="2099-12-31" />
-                    </span>
+                      class="range-slider__input"
+                      type="range"
+                      id="score-max"
+                      min="0"
+                      max="10"
+                      step="1"
+                      value="10" />
                   </div>
-
-                  <div class="date-forms">
-                    <label class="data-label" for="date-to">to:</label>
-                    <span class="date-field">
-                      <input
-                        type="text"
-                        class="date-input"
-                        id="date-input-to"
-                        autocomplete="off" />
-                      <button class="date-button">
-                        <i class="fa-regular fa-calendar"></i>
-                      </button>
-                      <input
-                        type="date"
-                        id="date-to"
-                        name="date-to"
-                        value=""
-                        min="2000-01-01"
-                        max="2099-12-31" />
-                    </span>
-                  </div>
+                  <span class="filter-range__value" id="slider-score-val"
+                    >0 - 10</span
+                  >
                 </div>
 
                 <div class="filter-range">
-                  <label class="filter-range__label" for="score-from">
-                    User Score
-                  </label>
-                  <input
-                    class="filter-range__input"
-                    type="range"
-                    id="score-from"
-                    min="0"
-                    max="10"
-                    step="1"
-                    value="0" />
-                  <span class="filter-range__label" id="score-from-val">
-                    0-10
-                  </span>
+                  <label class="filter-range__label">Minimum User Votes</label>
+                  <div class="range-slider" id="slider-votes">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="min-votes"
+                      min="0"
+                      max="500"
+                      step="50"
+                      value="0" />
+                  </div>
+                  <span class="filter-range__value" id="slider-votes-val"
+                    >0</span
+                  >
                 </div>
 
                 <div class="filter-range">
-                  <label class="filter-range__label" for="min-votes">
-                    Minimum User Votes
-                  </label>
-                  <input
-                    class="filter-range__input"
-                    type="range"
-                    id="min-votes"
-                    min="0"
-                    max="500"
-                    step="50"
-                    value="0" />
-                  <span class="filter-range__label" id="min-votes-val">0</span>
+                  <label class="filter-range__label">Runtime</label>
+                  <div class="range-slider" id="slider-runtime">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="runtime-min"
+                      min="0"
+                      max="400"
+                      step="15"
+                      value="0" />
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="runtime-max"
+                      min="0"
+                      max="400"
+                      step="15"
+                      value="400" />
+                  </div>
+                  <span class="filter-range__value" id="slider-runtime-val"
+                    >0 - 400 minutes</span
+                  >
                 </div>
 
                 <button class="filter-panel__search-btn" id="search-btn">

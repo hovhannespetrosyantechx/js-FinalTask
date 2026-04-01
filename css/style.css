@@ -148,6 +148,11 @@ ol {
 .filter-panel__body {
   padding: var(--spacing-md);
 }
+.filter-panel__body > * + * {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border-panel);
+}
 
 .sort-select {
   appearance: none;
@@ -320,7 +325,10 @@ ol {
 #date-from {
   position: absolute;
   opacity: 0;
-  height: 0;
+  pointer-events: none; /* Prevents ghost-clicking the invisible input */
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .date-filter {
@@ -334,6 +342,76 @@ ol {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.filter-range__value {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  display: block;
+  margin-top: 4px;
+}
+
+.range-slider {
+  position: relative;
+  width: 100%;
+  height: 24px; /* Gives a larger hit area for the thumb */
+  margin-top: var(--spacing-xs);
+}
+
+.range-slider__bg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 4px;
+  background-color: var(--color-border-panel); 
+  border-radius: 2px;
+}
+
+.range-slider__fill {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 4px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+.range-slider__input {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  outline: none;
+  margin: 0;
+}
+
+.range-slider__input::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto; 
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-panel);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+
+.range-slider__input::-moz-range-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  background-color: #ffffff;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-panel);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .filter-panel__search-btn {
@@ -566,3 +644,4 @@ ol {
 .footer__link:hover {
   color: var(--color-text-light);
 }
+

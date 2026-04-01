@@ -20,7 +20,7 @@ function collectFilters() {
     genres: activeGenres,
     releaseDateFrom: document.getElementById("date-from").value,
     releaseDateTo: document.getElementById("date-to").value,
-    scoreMin: Number(document.getElementById("score-from").value),
+    scoreMin: Number(document.getElementById("score-min").value),
     minVotes: Number(document.getElementById("min-votes").value),
     releaseTypes: releaseTypes,
     watchRegion: document.getElementById("release-country").value,
@@ -78,7 +78,138 @@ async function loadMoreMovies() {
   }
 }
 
+
+
+function initDualSlider(containerId, formatter) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const inputs = container.querySelectorAll('.range-slider__input');
+  const fill = container.querySelector('.range-slider__fill');
+  const display = document.getElementById(`${containerId}-val`);
+
+  const minInput = inputs[0];
+  const maxInput = inputs[1];
+
+  function updateUI() {
+    let minVal = parseInt(minInput.value);
+    let maxVal = parseInt(maxInput.value);
+
+    if (minVal > maxVal) {
+      const temp = minVal;
+      minVal = maxVal;
+      maxVal = temp;
+      minInput.value = minVal;
+      maxInput.value = maxVal;
+    }
+
+    const minPercent = ((minVal - minInput.min) / (minInput.max - minInput.min)) * 100;
+    const maxPercent = ((maxVal - maxInput.min) / (maxInput.max - maxInput.min)) * 100;
+
+    fill.style.left = `${minPercent}%`;
+    fill.style.width = `${maxPercent - minPercent}%`;
+
+    display.textContent = formatter ? formatter(minVal, maxVal) : `${minVal} - ${maxVal}`;
+  }
+
+  minInput.addEventListener('input', updateUI);
+  maxInput.addEventListener('input', updateUI);
+  updateUI();
+}
+
+function initSingleSlider(containerId, formatter) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const input = container.querySelector('.range-slider__input');
+  const fill = container.querySelector('.range-slider__fill');
+  const display = document.getElementById(`${containerId}-val`);
+
+  function updateUI() {
+    const val = parseInt(input.value);
+    const percent = ((val - input.min) / (input.max - input.min)) * 100;
+
+    fill.style.left = `0%`;
+    fill.style.width = `${percent}%`;
+
+    display.textContent = formatter ? formatter(val) : val;
+  }
+
+  input.addEventListener('input', updateUI);
+  updateUI(); 
+}
+
+
+function initFilterToggles() {
+  const allReleasesCheckbox = document.getElementById("search-all-releases");
+  const allCountriesCheckbox = document.getElementById("search-all-countries");
+
+  const countryCheckboxContainer = allCountriesCheckbox.closest(".filter__option");
+  const countryDropdown = document.querySelector(".release-dates__country");
+  const releaseTypesList = document.querySelector(".filter__options--types");
+
+  allReleasesCheckbox.checked = true;
+  allCountriesCheckbox.checked = true;
+
+  function updateVisibility() {
+    if (allReleasesCheckbox.checked) {
+      countryCheckboxContainer.style.display = "none";
+      countryDropdown.style.display = "none";
+      releaseTypesList.style.display = "none";
+    } else {
+      countryCheckboxContainer.style.display = ""; 
+      releaseTypesList.style.display = "";
+
+      if (allCountriesCheckbox.checked) {
+        countryDropdown.style.display = "none";
+      } else {
+        countryDropdown.style.display = "";
+      }
+    }
+  }
+
+  allReleasesCheckbox.addEventListener("change", updateVisibility);
+  allCountriesCheckbox.addEventListener("change", updateVisibility);
+
+  updateVisibility();
+}
+
+
+function initDatePickers() {
+  const dateFields = document.querySelectorAll('.date-field');
+
+  dateFields.forEach(field => {
+    const textInput = field.querySelector('.date-input');
+    const calendarBtn = field.querySelector('.date-button');
+    const hiddenDateInput = field.querySelector('input[type="date"]');
+
+    const openPicker = () => {
+      try {
+        hiddenDateInput.showPicker();
+      } catch (err) {
+        hiddenDateInput.click();
+      }
+    };
+
+    calendarBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPicker();
+    });
+
+    textInput.addEventListener('click', openPicker);
+
+    hiddenDateInput.addEventListener('change', () => {
+      textInput.value = hiddenDateInput.value;
+    });
+  });
+}
+
 async function init() {
+  initFilterToggles();
+  initDatePickers();
+  initDualSlider("slider-score", (min, max) => `${min} - ${max}`);
+  initDualSlider("slider-runtime", (min, max) => `${min} - ${max} minutes`);
+  initSingleSlider("slider-votes", (val) => val);
   try {
     const genres = await fetchGenres();
     renderGenres(genres);
@@ -97,14 +228,4 @@ document.getElementById("sort-panel-header").addEventListener("click", (e) =>
 document.getElementById("filter-panel-header").addEventListener("click", (e) =>
   togglePanel(e.currentTarget, "filter-panel-body"));
 
-document.getElementById("score-from").addEventListener("input", (e) => {
-  const val = Number(e.target.value);
-  document.getElementById("score-from-val").textContent = val === 0 ? "0 - 10" : `${val} - 10`;
-});
-
-document.getElementById("min-votes").addEventListener("input", (e) => {
-  document.getElementById("min-votes-val").textContent = e.target.value;
-});
-
 init();
-
