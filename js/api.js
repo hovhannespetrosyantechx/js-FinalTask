@@ -13,11 +13,18 @@ export async function fetchGenres() {
   return data.genres;
 }
 
+export async function fetchLanguages() {
+  return await apiFetch("/configuration/languages");
+}
+
 export async function fetchMovies(filters, page = 1) {
   const params = { sort_by: filters.sortBy, page };
 
   if (filters.genres.length) {
     params.with_genres = filters.genres.join(",");
+  }
+  if (filters.language) {
+    params.with_original_language = filters.language;
   }
   if (filters.releaseDateFrom) {
     params["primary_release_date.gte"] = filters.releaseDateFrom;

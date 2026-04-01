@@ -37,6 +37,21 @@ export function renderGenres(genres) {
   });
 }
 
+export function renderLanguages(languages) {
+  const select = document.getElementById("language-select");
+  
+  const sortedLanguages = languages.sort((a, b) => 
+    a.english_name.localeCompare(b.english_name)
+  );
+
+  sortedLanguages.forEach((lang) => {
+    const option = document.createElement("option");
+    option.value = lang.iso_639_1;
+    option.textContent = lang.english_name;
+    select.appendChild(option);
+  });
+}
+
 export function renderMovies(movies, append = false) {
   const grid = document.getElementById("movie-grid");
   if (!append) grid.innerHTML = "";
@@ -59,8 +74,8 @@ export function renderMovies(movies, append = false) {
     card.innerHTML = `
       <div class="movie-card__poster-wrapper">
         ${movie.poster_path
-            ? `<img class="movie-card__poster" src="${IMG_BASE_URL}${movie.poster_path}" alt="${movie.title}" loading="lazy"/>`
-            : `<div class="movie-card__poster--placeholder"><i class="fa-solid fa-film"></i></div>`}
+        ? `<img class="movie-card__poster" src="${IMG_BASE_URL}${movie.poster_path}" alt="${movie.title}" loading="lazy"/>`
+        : `<div class="movie-card__poster--placeholder"><i class="fa-solid fa-film"></i></div>`}
       </div>
       <button class="movie-card__options" aria-label="Open options menu">
         <i class="fa-solid fa-ellipsis"></i>

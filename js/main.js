@@ -1,5 +1,5 @@
-import { fetchGenres, fetchMovies } from "./api.js";
-import { renderGenres, renderMovies, showLoadMoreButton } from "./render.js";
+import { fetchGenres, fetchMovies , fetchLanguages} from "./api.js";
+import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages} from "./render.js";
 
 const state = {
   currentPage: 1,
@@ -17,6 +17,7 @@ function collectFilters() {
 
   return {
     sortBy: document.getElementById("sort-select").value,
+    language: document.getElementById("language-select").value,
     genres: activeGenres,
     releaseDateFrom: document.getElementById("date-from").value,
     releaseDateTo: document.getElementById("date-to").value,
@@ -136,7 +137,7 @@ function initSingleSlider(containerId, formatter) {
   }
 
   input.addEventListener('input', updateUI);
-  updateUI(); 
+  updateUI();
 }
 
 
@@ -157,7 +158,7 @@ function initFilterToggles() {
       countryDropdown.style.display = "none";
       releaseTypesList.style.display = "none";
     } else {
-      countryCheckboxContainer.style.display = ""; 
+      countryCheckboxContainer.style.display = "";
       releaseTypesList.style.display = "";
 
       if (allCountriesCheckbox.checked) {
@@ -211,10 +212,15 @@ async function init() {
   initDualSlider("slider-runtime", (min, max) => `${min} - ${max} minutes`);
   initSingleSlider("slider-votes", (val) => val);
   try {
-    const genres = await fetchGenres();
+    const [genres, languages] = await Promise.all([
+      fetchGenres(),
+      fetchLanguages()
+    ]);
+
     renderGenres(genres);
+    renderLanguages(languages);
   } catch (err) {
-    console.error("Failed to load genres:", err);
+    console.error("Failed to load filter data:", err);
   }
   await loadMovies();
 }
