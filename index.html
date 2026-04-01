@@ -41,8 +41,24 @@
               <i class="fa-solid fa-magnifying-glass"></i>
             </a>
           </div>
+          <button class="header__burger" id="burger-btn" aria-label="Toggle navigation" aria-expanded="false">
+            <i class="fa-solid fa-bars" id="burger-icon"></i>
+          </button>
         </div>
       </header>
+
+      <!-- Mobile nav drawer (injected below header, outside .container) -->
+      <nav class="header__mobile-nav" id="mobile-nav">
+        <a class="header__mobile-nav-link" href="#">Movies</a>
+        <a class="header__mobile-nav-link" href="#">TV Shows</a>
+        <a class="header__mobile-nav-link" href="#">People</a>
+        <a class="header__mobile-nav-link" href="#">Awards</a>
+        <a class="header__mobile-nav-link" href="#">More</a>
+        <a class="header__mobile-nav-link" href="#"><i class="fa-solid fa-plus"></i> Add</a>
+        <a class="header__mobile-nav-link" href="#">Login</a>
+        <a class="header__mobile-nav-link" href="#">Join TMDB</a>
+        <a class="header__mobile-nav-link" href="#"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+      </nav>
 
       <div class="container">
         <div class="page-title">
@@ -243,7 +259,7 @@
                 </div>
 
                 <div class="filter-range">
-                  <p class="filter-section__label">Language</p>
+                  <p class="filter-range__label">Language</p>
                   <select class="sort-select" id="language-select">
                     <option value="">None Selected</option>
                   </select>
@@ -323,7 +339,7 @@
                 </div>
 
                 <div class="filter-range">
-                  <p class="filter-section__label">Keywords</p>
+                  <p class="filter-range__label">Keywords</p>
                   <div class="keyword-wrapper">
                     <input
                       type="text"

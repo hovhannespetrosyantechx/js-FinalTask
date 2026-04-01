@@ -304,7 +304,7 @@ async function init() {
   initDatePickers();
   initKeywordSearch();
   initDualSlider("slider-score", (min, max) => `${min} - ${max}`);
-  initDualSlider("slider-runtime", (min, max) => { return `${min} - ${max} minutes`; }, 0, 400);
+  initDualSlider("slider-runtime", (min, max) => `${min} - ${max} minutes`);
   initSingleSlider("slider-votes", (val) => val);
   initCookieBanner();
   try {
@@ -323,6 +323,26 @@ async function init() {
 
 document.getElementById("search-btn").addEventListener("click", loadMovies);
 document.getElementById("load-more-btn").addEventListener("click", loadMoreMovies);
+
+const burgerBtn = document.getElementById("burger-btn");
+const mobileNav = document.getElementById("mobile-nav");
+const burgerIcon = document.getElementById("burger-icon");
+
+burgerBtn.addEventListener("click", () => {
+  const isOpen = mobileNav.classList.toggle("header__mobile-nav--open");
+  burgerBtn.setAttribute("aria-expanded", isOpen);
+  mobileNav.setAttribute("aria-hidden", !isOpen);
+  burgerIcon.className = isOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+});
+
+document.addEventListener("click", (e) => {
+  if (!burgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+    mobileNav.classList.remove("header__mobile-nav--open");
+    burgerBtn.setAttribute("aria-expanded", "false");
+    mobileNav.setAttribute("aria-hidden", "true");
+    burgerIcon.className = "fa-solid fa-bars";
+  }
+});
 
 document.getElementById("sort-panel-header").addEventListener("click", (e) =>
   togglePanel(e.currentTarget, "sort-panel-body"));
