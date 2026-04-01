@@ -19,20 +19,24 @@ export async function fetchLanguages() {
 
 export async function fetchKeywordSuggestions(query) {
   const data = await apiFetch("/search/keyword", { query, page: 1 });
-  return data.results; 
+  return data.results;
+}
+
+export async function fetchCountries() {
+  return await apiFetch("/configuration/countries");
 }
 
 export async function fetchMovies(filters, page = 1) {
   const params = { sort_by: filters.sortBy, page };
 
   if (filters.genres.length) {
-    params.with_genres = filters.genres.join(",");
+    params.with_genres = filters.genres.join("|");
   }
   if (filters.language) {
     params.with_original_language = filters.language;
   }
   if (filters.keywords && filters.keywords.length > 0) {
-    params.with_keywords = filters.keywords.join(",");
+    params.with_keywords = filters.keywords.join("|");
   }
   if (filters.releaseTypes && filters.releaseTypes.length > 0) {
     params.with_release_type = filters.releaseTypes.join("|");
@@ -40,11 +44,20 @@ export async function fetchMovies(filters, page = 1) {
   if (filters.watchRegion) {
     params.region = filters.watchRegion;
   }
-  if (filters.releaseDateFrom) {
-    params["primary_release_date.gte"] = filters.releaseDateFrom;
-  }
-  if (filters.releaseDateTo) {
-    params["primary_release_date.lte"] = filters.releaseDateTo;
+  if (filters.searchAllReleases) {
+    if (filters.releaseDateFrom) {
+      params["primary_release_date.gte"] = filters.releaseDateFrom;
+    }
+    if (filters.releaseDateTo) {
+      params["primary_release_date.lte"] = filters.releaseDateTo;
+    }
+  } else {
+    if (filters.releaseDateFrom) {
+      params["release_date.gte"] = filters.releaseDateFrom;
+    }
+    if (filters.releaseDateTo) {
+      params["release_date.lte"] = filters.releaseDateTo;
+    }
   }
   if (filters.scoreMin > 0) {
     params["vote_average.gte"] = filters.scoreMin;

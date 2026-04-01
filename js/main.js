@@ -1,6 +1,5 @@
-import { fetchGenres, fetchMovies, fetchLanguages, fetchKeywordSuggestions } from "./api.js";
-import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages, renderKeywordSuggestions, renderActiveKeywordPills } from "./render.js";
-
+import { fetchGenres, fetchMovies, fetchLanguages, fetchKeywordSuggestions, fetchCountries } from "./api.js";
+import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages, renderKeywordSuggestions, renderActiveKeywordPills, renderCountries } from "./render.js";
 const state = {
   currentPage: 1,
   totalPages: 1,
@@ -11,15 +10,26 @@ const state = {
 let selectedKeywordsData = [];
 
 function collectFilters() {
+
+  const allReleasesChecked = document.getElementById("search-all-releases").checked;
+  const allCountriesChecked = document.getElementById("search-all-countries").checked;
+
+  const releaseTypes = !allReleasesChecked
+    ? [...document.querySelectorAll('input[name="release-type"]:checked')]
+      .map(input => input.value)
+    : [];
+
+
+  const watchRegion = (!allReleasesChecked && !allCountriesChecked)
+    ? document.getElementById("release-country").value
+    : "";
   const activeGenres = [...document.querySelectorAll(".genre-pill--active")]
     .map((pill) => Number(pill.dataset.genreId));
-
-  const releaseTypes = [...document.querySelectorAll('input[name="release-type"]:checked')]
-    .map(input => input.value);
 
   const keywordIds = selectedKeywordsData.map(kw => kw.id);
 
   return {
+    searchAllReleases: allReleasesChecked,
     sortBy: document.getElementById("sort-select").value,
     language: document.getElementById("language-select").value,
     genres: activeGenres,
@@ -31,8 +41,8 @@ function collectFilters() {
     minVotes: Number(document.getElementById("min-votes").value),
     runtimeMin: Number(document.getElementById("runtime-min").value),
     runtimeMax: Number(document.getElementById("runtime-max").value),
-    releaseTypes: releaseTypes,
-    watchRegion: document.getElementById("release-country").value,
+    releaseTypes: releaseTypes,          
+    watchRegion: watchRegion
   };
 }
 
@@ -102,16 +112,23 @@ function initDualSlider(containerId, formatter) {
   const minInput = inputs[0];
   const maxInput = inputs[1];
 
-  function updateUI() {
+  function updateUI(e) {
     let minVal = parseInt(minInput.value);
     let maxVal = parseInt(maxInput.value);
 
-    if (minVal > maxVal) {
-      const temp = minVal;
+
+    if (e && e.target === minInput && minVal > maxVal) {
+      minInput.value = maxVal;
       minVal = maxVal;
-      maxVal = temp;
-      minInput.value = minVal;
-      maxInput.value = maxVal;
+    } else if (e && e.target === maxInput && maxVal < minVal) {
+      maxInput.value = minVal;
+      maxVal = minVal;
+    }
+
+    if (minVal > (parseInt(minInput.max) / 2)) {
+      minInput.style.zIndex = "5";
+    } else {
+      minInput.style.zIndex = "";
     }
 
     const minPercent = ((minVal - minInput.min) / (minInput.max - minInput.min)) * 100;
@@ -125,6 +142,7 @@ function initDualSlider(containerId, formatter) {
 
   minInput.addEventListener('input', updateUI);
   maxInput.addEventListener('input', updateUI);
+  
   updateUI();
 }
 
@@ -171,6 +189,13 @@ function initFilterToggles() {
       countryCheckboxContainer.style.display = "";
       releaseTypesList.style.display = "";
 
+      
+      allCountriesCheckbox.checked = true;
+
+      document.querySelectorAll('input[name="release-type"]').forEach((checkbox) => {
+        checkbox.checked = true;
+      });
+
       if (allCountriesCheckbox.checked) {
         countryDropdown.style.display = "none";
       } else {
@@ -182,7 +207,7 @@ function initFilterToggles() {
   allReleasesCheckbox.addEventListener("change", updateVisibility);
   allCountriesCheckbox.addEventListener("change", updateVisibility);
 
-  updateVisibility();
+  updateVisibility(); 
 }
 
 
@@ -236,7 +261,7 @@ function initKeywordSearch() {
 
         renderKeywordSuggestions(results, (selectedKeyword) => {
           addKeyword(selectedKeyword);
-          input.value = ''; 
+          input.value = '';
           suggestionsBox.style.display = 'none';
         });
 
@@ -308,13 +333,15 @@ async function init() {
   initSingleSlider("slider-votes", (val) => val);
   initCookieBanner();
   try {
-    const [genres, languages] = await Promise.all([
+    const [genres, languages, countries] = await Promise.all([
       fetchGenres(),
-      fetchLanguages()
+      fetchLanguages(),
+      fetchCountries()
     ]);
 
     renderGenres(genres);
     renderLanguages(languages);
+    renderCountries(countries);
   } catch (err) {
     console.error("Failed to load filter data:", err);
   }

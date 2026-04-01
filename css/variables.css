@@ -4,7 +4,10 @@
   --color-bg-footer: #032541;
   --color-bg-card: #ffffff;
   --color-bg-sidebar: #ffffff;
-  --color-bg-badge: #081c22;
+  --color-bg-hover: #f5f5f5;
+  --color-bg-muted: #dbdbdb;
+  --color-bg-control: #ced4da;
+  --color-bg-header-translucent: rgba(3, 37, 65, 0.95);
 
   --color-primary: #01b4e4;
   --color-primary-dark: #0199c8;
@@ -12,12 +15,19 @@
   --color-text-primary: #000000;
   --color-text-light: #ffffff;
   --color-text-muted: #999999;
+  --color-text-subtle: #a4a4a4;
 
   --color-border-panel: #d7d7d7;
-  --color-rating-good: #21d07a;
-  --color-rating-mid: #d2d531;
-  --color-rating-bad: #db2360;
+  --color-border-muted: #cccccc;
+  --color-border-light: #f0f0f0;
   --color-rating-bg: #081c22;
+  --color-focus-ring: #8ccecf;
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-70: rgba(255, 255, 255, 0.7);
+  --color-white-08: rgba(255, 255, 255, 0.08);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-60: rgba(0, 0, 0, 0.6);
 
   --font-family-base: "Source Sans 3", sans-serif;
   --font-size-xs: 10px;
@@ -26,7 +36,6 @@
   --font-size-md: 16px;
   --font-size-lg: 18px;
   --font-size-xl: 22px;
-  --font-weight-normal: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
@@ -44,6 +53,7 @@
 
   --radius-sm: 4px;
   --radius-md: 8px;
+  --radius-pill: 20px;
   --radius-full: 50%;
   --transition-fast: 0.15s ease;
   --transition-base: 0.2s ease;
@@ -51,4 +61,3 @@
   --shadow-panel: 0 2px 8px rgba(0, 0, 0, 0.1);
   --shadow-header: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
-

@@ -109,7 +109,6 @@ export function renderKeywordSuggestions(keywords, onSelectCallback) {
     li.className = 'keyword-suggestion-item';
     li.textContent = kw.name;
     
-    // Tell main.js which keyword was clicked
     li.addEventListener('click', () => onSelectCallback(kw));
     
     suggestionsBox.appendChild(li);
@@ -134,6 +133,38 @@ export function renderActiveKeywordPills(selectedKeywordsData, onRemoveCallback)
   });
 }
 
+
+
+function getFlagEmoji(iso) {
+  if (!iso || iso.length !== 2) return "";
+  return String.fromCodePoint(
+    ...iso.toUpperCase().split("").map((char) => 0x1F1E6 + char.charCodeAt(0) - 65)
+  );
+}
+
+export function renderCountries(countries) {
+  const select = document.getElementById("release-country");
+  if (!select) return;
+
+  select.innerHTML = "";
+
+  const sortedCountries = [...countries].sort((a, b) =>
+    a.english_name.localeCompare(b.english_name)
+  );
+
+  sortedCountries.forEach((country) => {
+    const option = document.createElement("option");
+    option.value = country.iso_3166_1;
+
+    const flag = getFlagEmoji(country.iso_3166_1);
+    option.textContent = `${flag} ${country.english_name}`;
+
+    select.appendChild(option);
+  });
+
+}
+
 export function showLoadMoreButton(visible) {
   document.getElementById("load-more-btn").style.display = visible ? "block" : "none";
 }
+
