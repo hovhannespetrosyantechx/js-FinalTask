@@ -1,5 +1,6 @@
 import { fetchGenres, fetchMovies, fetchLanguages, fetchKeywordSuggestions, fetchCountries } from "./api.js";
 import { renderGenres, renderMovies, showLoadMoreButton, renderLanguages, renderKeywordSuggestions, renderActiveKeywordPills, renderCountries } from "./render.js";
+
 const state = {
   currentPage: 1,
   totalPages: 1,
@@ -23,6 +24,7 @@ function collectFilters() {
   const watchRegion = (!allReleasesChecked && !allCountriesChecked)
     ? document.getElementById("release-country").value
     : "";
+    
   const activeGenres = [...document.querySelectorAll(".genre-pill--active")]
     .map((pill) => Number(pill.dataset.genreId));
 
@@ -185,16 +187,14 @@ function initFilterToggles() {
       countryCheckboxContainer.style.display = "none";
       countryDropdown.style.display = "none";
       releaseTypesList.style.display = "none";
-    } else {
-      countryCheckboxContainer.style.display = "";
-      releaseTypesList.style.display = "";
-
-      
+      // Reset dependent filters when "Search all releases" is on
       allCountriesCheckbox.checked = true;
-
       document.querySelectorAll('input[name="release-type"]').forEach((checkbox) => {
         checkbox.checked = true;
       });
+    } else {
+      countryCheckboxContainer.style.display = "";
+      releaseTypesList.style.display = "";
 
       if (allCountriesCheckbox.checked) {
         countryDropdown.style.display = "none";

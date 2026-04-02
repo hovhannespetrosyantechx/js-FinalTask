@@ -126,7 +126,6 @@ export function renderActiveKeywordPills(selectedKeywordsData, onRemoveCallback)
     li.className = 'keyword-pill keyword-pill--active'; 
     li.innerHTML = `${kw.name} <i class="fa-solid fa-xmark"></i>`;
     
-    // Tell main.js to remove this specific keyword ID
     li.addEventListener('click', () => onRemoveCallback(kw.id));
     
     selectedBox.appendChild(li);
