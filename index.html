@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Popular Movies — TMDB Clone" />
+    <title>Popular Movies — TMDB Clone</title>
+    <link rel="stylesheet" href="css/variables.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="header__inner container">
+          <a class="header__logo" href="#">
+            <img
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_short-8e7b30f73a4020692ccca9c88bafe5dcb6f8a62a4c6bc55cd9ba82bb2cd95f6c.svg"
+              alt="TMDB Logo" />
+          </a>
+          <nav class="header__nav">
+            <a class="header__nav-link" href="#">Movies</a>
+            <a class="header__nav-link" href="#">TV Shows</a>
+            <a class="header__nav-link" href="#">People</a>
+            <a class="header__nav-link" href="#">Awards</a>
+            <a class="header__nav-link" href="#">More</a>
+          </nav>
+          <div class="header__actions">
+            <a href="#" class="header__nav-link">
+              <i class="fa-solid fa-plus"></i>
+            </a>
+            <span class="header__nav-link header__nav-link--bordered">EN</span>
+            <a href="#" class="header__nav-link">Login</a>
+            <a href="#" class="header__nav-link">Join TMDB</a>
+            <a href="#" class="header__nav-link">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+          </div>
+          <button class="header__burger" id="burger-btn" aria-label="Toggle navigation" aria-expanded="false">
+            <i class="fa-solid fa-bars" id="burger-icon"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Mobile nav drawer (injected below header, outside .container) -->
+      <nav class="header__mobile-nav" id="mobile-nav">
+        <a class="header__mobile-nav-link" href="#">Movies</a>
+        <a class="header__mobile-nav-link" href="#">TV Shows</a>
+        <a class="header__mobile-nav-link" href="#">People</a>
+        <a class="header__mobile-nav-link" href="#">Awards</a>
+        <a class="header__mobile-nav-link" href="#">More</a>
+        <a class="header__mobile-nav-link" href="#"><i class="fa-solid fa-plus"></i> Add</a>
+        <a class="header__mobile-nav-link" href="#">Login</a>
+        <a class="header__mobile-nav-link" href="#">Join TMDB</a>
+        <a class="header__mobile-nav-link" href="#"><i class="fa-solid fa-magnifying-glass"></i> Search</a>
+      </nav>
+
+      <div class="container">
+        <div class="page-title">
+          <h1 class="page-title__text">Popular Movies</h1>
+        </div>
+
+        <main class="content">
+          <aside class="content__sidebar">
+            <div class="filter-panel">
+              <div
+                class="filter-panel__header filter-panel__header--open"
+                id="sort-panel-header">
+                <span class="filter-panel__title">Sort</span>
+                <i
+                  class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+              </div>
+              <div class="filter-panel__body" id="sort-panel-body">
+                <p class="filter-range__label">Sort Results By</p>
+                <select class="sort-select" id="sort-select">
+                  <option value="popularity.desc">Popularity Descending</option>
+                  <option value="popularity.asc">Popularity Ascending</option>
+                  <option value="vote_average.desc">Rating Descending</option>
+                  <option value="vote_average.asc">Rating Ascending</option>
+                  <option value="primary_release_date.desc">
+                    Release Date Descending
+                  </option>
+                  <option value="primary_release_date.asc">
+                    Release Date Ascending
+                  </option>
+                  <option value="title.asc">Title (A-Z)</option>
+                  <option value="title.desc">Title (Z-A)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="filter-panel">
+              <div
+                class="filter-panel__header filter-panel__header--open"
+                id="filter-panel-header">
+                <span class="filter-panel__title">Filters</span>
+                <i
+                  class="fa-solid fa-chevron-down filter-panel__toggle-icon"></i>
+              </div>
+
+              <div class="filter-panel__body" id="filter-panel-body">
+                <div class="filter-range">
+                  <p class="filter-range__label">Show me</p>
+
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="everything" />
+                    <label for="everything">Everything</label>
+                  </div>
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="not-seen" />
+                    <label for="not-seen">Movies I Haven't Seen</label>
+                  </div>
+                  <div class="filter-radio">
+                    <input type="radio" name="show" id="seen" />
+                    <label for="seen">Movies I Have Seen</label>
+                  </div>
+                </div>
+
+                <div class="filter-range">
+                  <p class="filter-range__label">Release Dates</p>
+                  <ul class="filter__options filter__options--top">
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="search-all-releases"
+                        name="search-all-releases" />
+                      <label for="search-all-releases"
+                        >Search all releases?</label
+                      >
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="search-all-countries"
+                        name="search-all-countries" />
+                      <label for="search-all-countries"
+                        >Search all countries?</label
+                      >
+                    </li>
+                  </ul>
+
+                  <div class="release-dates__country">
+                    <select
+                      class="sort-select release-dates__country-select"
+                      id="release-country">
+
+                    </select>
+                  </div>
+
+                  <ul class="filter__options filter__options--types">
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-theatrical-limited"
+                        name="release-type"
+                        value="1" />
+                      <label for="release-theatrical-limited"
+                        >Theatrical (limited)</label
+                      >
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-theatrical"
+                        name="release-type"
+                        value="2" />
+                      <label for="release-theatrical">Theatrical</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-premiere"
+                        name="release-type"
+                        value="4" />
+                      <label for="release-premiere">Premiere</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-digital"
+                        name="release-type"
+                        value="6" />
+                      <label for="release-digital">Digital</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-physical"
+                        name="release-type"
+                        value="5" />
+                      <label for="release-physical">Physical</label>
+                    </li>
+                    <li class="filter__option">
+                      <input
+                        type="checkbox"
+                        id="release-tv"
+                        name="release-type"
+                        value="3" />
+                      <label for="release-tv">TV</label>
+                    </li>
+                  </ul>
+
+                  <div class="date-filter">
+                    <div class="date-forms">
+                      <label class="data-label" for="date-from"> from: </label>
+                      <span class="date-field">
+                        <input
+                          type="text"
+                          class="date-input"
+                          id="date-input-from"
+                          autocomplete="off"
+                          value="" />
+                        <button class="date-button">
+                          <i class="fa-regular fa-calendar"></i>
+                        </button>
+                        <input
+                          type="date"
+                          id="date-from"
+                          name="date-from"
+                          value=""
+                          min="2000-01-01"
+                          max="2099-12-31" />
+                      </span>
+                    </div>
+
+                    <div class="date-forms">
+                      <label class="data-label" for="date-to">to:</label>
+                      <span class="date-field">
+                        <input
+                          type="text"
+                          class="date-input"
+                          id="date-input-to"
+                          autocomplete="off" />
+                        <button class="date-button">
+                          <i class="fa-regular fa-calendar"></i>
+                        </button>
+                        <input
+                          type="date"
+                          id="date-to"
+                          name="date-to"
+                          value=""
+                          min="2000-01-01"
+                          max="2099-12-31" />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter-range">
+                  <p class="filter-range__label">Genres</p>
+
+                  <ul class="genre-list" id="genre-list"></ul>
+                </div>
+
+                <div class="filter-range">
+                  <p class="filter-range__label">Language</p>
+                  <select class="sort-select" id="language-select">
+                    <option value="">None Selected</option>
+                  </select>
+                </div>
+
+                <div class="filter-range">
+                  <label class="filter-range__label">User Score</label>
+                  <div class="range-slider" id="slider-score">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="score-min"
+                      min="0"
+                      max="10"
+                      step="1"
+                      value="0" />
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="score-max"
+                      min="0"
+                      max="10"
+                      step="1"
+                      value="10" />
+                  </div>
+                  <span class="filter-range__value" id="slider-score-val"
+                    >0 - 10</span
+                  >
+                </div>
+
+                <div class="filter-range">
+                  <label class="filter-range__label">Minimum User Votes</label>
+                  <div class="range-slider" id="slider-votes">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="min-votes"
+                      min="0"
+                      max="500"
+                      step="50"
+                      value="0" />
+                  </div>
+                  <span class="filter-range__value" id="slider-votes-val"
+                    >0</span
+                  >
+                </div>
+
+                <div class="filter-range">
+                  <label class="filter-range__label">Runtime</label>
+                  <div class="range-slider" id="slider-runtime">
+                    <div class="range-slider__bg"></div>
+                    <div class="range-slider__fill"></div>
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="runtime-min"
+                      min="0"
+                      max="400"
+                      step="10"
+                      value="0" />
+                    <input
+                      class="range-slider__input"
+                      type="range"
+                      id="runtime-max"
+                      min="0"
+                      max="400"
+                      step="10"
+                      value="400" />
+                  </div>
+                  <span class="filter-range__value" id="slider-runtime-val">
+                    0 - 400 minutes
+                  </span>
+                </div>
+
+                <div class="filter-range">
+                  <p class="filter-range__label">Keywords</p>
+                  <div class="keyword-wrapper">
+                    <input
+                      type="text"
+                      id="keyword-input"
+                      class="sort-select"
+                      placeholder="Filter by keywords..."
+                      autocomplete="off" />
+                    <ul
+                      id="keyword-suggestions"
+                      class="keyword-suggestions"></ul>
+                  </div>
+                  <ul class="genre-list" id="selected-keywords"></ul>
+                </div>
+              </div>
+            </div>
+            <button class="filter-panel__search-btn" id="search-btn">
+              Search
+            </button>
+          </aside>
+
+          <section class="content__main">
+            <div class="movie-grid" id="movie-grid"></div>
+            <button class="load-more" id="load-more-btn">Load More</button>
+          </section>
+        </main>
+      </div>
+
+      <footer class="footer">
+        <div class="footer__inner container">
+          <div class="footer__brand">
+            <img
+              class="footer__logo"
+              src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_2-d537fb228cf3ded904ef09b136fe3fec72548ebc1fea3fbbd1ad9e36364db38b.svg"
+              alt="TMDB Logo" />
+            <button class="footer__join-btn">Join the Community</button>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__col-title">The Basics</h4>
+            <a href="#" class="footer__link">About TMDB</a>
+            <a href="#" class="footer__link">Contact Us</a>
+            <a href="#" class="footer__link">API Documentation</a>
+            <a href="#" class="footer__link">API for Business</a>
+            <a href="#" class="footer__link">System Status</a>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__col-title">Get Involved</h4>
+            <a href="#" class="footer__link">Contribution Bible</a>
+            <a href="#" class="footer__link">Add New Movie</a>
+            <a href="#" class="footer__link">Add New TV Show</a>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__col-title">Community</h4>
+            <a href="#" class="footer__link">Guidelines</a>
+            <a href="#" class="footer__link">Discussions</a>
+            <a href="#" class="footer__link">Leaderboard</a>
+            <a href="#" class="footer__link">Support Forums</a>
+          </div>
+
+          <div class="footer__col">
+            <h4 class="footer__col-title">Legal</h4>
+            <a href="#" class="footer__link">Terms of Use</a>
+            <a href="#" class="footer__link">API Terms of Use</a>
+            <a href="#" class="footer__link">Privacy Policy</a>
+            <a href="#" class="footer__link">DMCA Policy</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div id="cookie-banner" class="cookie-banner">
+      <div class="container cookie-banner__inner">
+        <p class="cookie-banner__text">
+          By clicking “Accept All Cookies”, you agree to the storing of cookies
+          on your device to enhance site navigation, analyze site usage, and
+          assist in our marketing efforts.
+        </p>
+        <div class="cookie-banner__actions">
+          <button id="cookie-accept" class="cookie-banner__btn">
+            Accept All Cookies
+          </button>
+          <button
+            id="cookie-settings"
+            class="cookie-banner__btn cookie-banner__btn--outline">
+            Cookies Settings
+          </button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
